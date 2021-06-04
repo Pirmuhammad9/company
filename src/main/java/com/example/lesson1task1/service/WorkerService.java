@@ -4,6 +4,7 @@ import com.example.lesson1task1.entity.Address;
 import com.example.lesson1task1.entity.Department;
 import com.example.lesson1task1.entity.Worker;
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.payload.WorkerDto;
 import com.example.lesson1task1.repository.AddressRepository;
 import com.example.lesson1task1.repository.DepartmentRepository;
@@ -38,9 +39,9 @@ public class WorkerService {
      * @param id
      * @return ApiResponse
      */
-    public ApiResponse getOne(Integer id){
+    public ApiResponseGetOne getOne(Integer id){
         Optional<Worker> byId = workerRepository.findById(id);
-        return byId.isPresent()?new ApiResponse("found", true):new ApiResponse("not found", false);
+        return byId.isPresent()?new ApiResponseGetOne("found", true, byId.get()):new ApiResponseGetOne("not found", false, byId.get());
     }
 
     /**

@@ -4,6 +4,7 @@ import com.example.lesson1task1.entity.Address;
 import com.example.lesson1task1.entity.Company;
 import com.example.lesson1task1.entity.Department;
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.payload.DepartmentDto;
 import com.example.lesson1task1.repository.CompanyRepository;
 import com.example.lesson1task1.repository.DepartmentRepository;
@@ -34,9 +35,9 @@ public class DepartmentService {
      * @param id
      * @return ApiResponse
      */
-    public ApiResponse getOne(Integer id){
+    public ApiResponseGetOne getOne(Integer id){
         Optional<Department> byId = departmentRepository.findById(id);
-        return byId.isPresent()?new ApiResponse("found", true):new ApiResponse("not found", false);
+        return byId.isPresent()?new ApiResponseGetOne("found", true, byId.get()):new ApiResponseGetOne("not found", false, byId.get());
     }
 
     /**

@@ -1,7 +1,9 @@
 package com.example.lesson1task1.service;
 
 import com.example.lesson1task1.entity.Address;
+import com.example.lesson1task1.entity.Worker;
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +28,9 @@ public class AddressService {
      * @param id
      * @return ApiResponse
      */
-    public ApiResponse getOne(Integer id){
+    public ApiResponseGetOne getOne(Integer id){
         Optional<Address> byId = addressRepository.findById(id);
-        return byId.isPresent()?new ApiResponse("found", true):new ApiResponse("not found", false);
+        return byId.isPresent()?new ApiResponseGetOne("found", true, byId.get()):new ApiResponseGetOne("not found", false, byId.get());
     }
 
     /**

@@ -2,6 +2,7 @@ package com.example.lesson1task1.controller;
 
 import com.example.lesson1task1.entity.Address;
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,12 @@ public class AddressController {
      * @return ApiResponse
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id){
-        ApiResponse response = addressService.getOne(id);
-        return ResponseEntity.status(response.isSuccess()?200:209).body(response);
+    public ResponseEntity<?> getOne(@PathVariable Integer id){
+        ApiResponseGetOne response = addressService.getOne(id);
+        if (response.isSuccess()){
+            return ResponseEntity.ok(response.getObject());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -42,7 +46,7 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<?> addAddress(@RequestBody Address address){
         ApiResponse apiResponse = addressService.addAddress(address);
-        return ResponseEntity.status(apiResponse.isSuccess()?201:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?201:409).body(apiResponse);
     }
 
     /**
@@ -53,7 +57,7 @@ public class AddressController {
     @PutMapping("/{id}")
     public ResponseEntity<?> editAddress(@PathVariable Integer id, @RequestBody Address address){
         ApiResponse apiResponse = addressService.editAddress(id, address);
-        return ResponseEntity.status(apiResponse.isSuccess()?202:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?202:409).body(apiResponse);
     }
 
     /**
@@ -64,7 +68,7 @@ public class AddressController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAddress(@PathVariable Integer id){
         ApiResponse apiResponse = addressService.deleteAddress(id);
-        return ResponseEntity.status(apiResponse.isSuccess()?200:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?200:409).body(apiResponse);
     }
 
 }

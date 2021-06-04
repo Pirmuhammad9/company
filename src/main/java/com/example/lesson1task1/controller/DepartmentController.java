@@ -1,7 +1,8 @@
 package com.example.lesson1task1.controller;
 
-import com.example.lesson1task1.entity.Address;
+
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.payload.DepartmentDto;
 import com.example.lesson1task1.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,9 @@ public class DepartmentController {
      * @return ApiResponse
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id){
-        ApiResponse response = departmentService.getOne(id);
-        return ResponseEntity.status(response.isSuccess()?200:209).body(response);
+    public ResponseEntity<ApiResponseGetOne> getOne(@PathVariable Integer id){
+        ApiResponseGetOne response = departmentService.getOne(id);
+        return ResponseEntity.status(response.isSuccess()?200:409).body(response);
     }
 
     /**
@@ -41,7 +42,7 @@ public class DepartmentController {
     @PostMapping
     public ResponseEntity<?> addAddress(@RequestBody DepartmentDto departmentDto){
         ApiResponse apiResponse = departmentService.addDepartment(departmentDto);
-        return ResponseEntity.status(apiResponse.isSuccess()?201:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?201:409).body(apiResponse);
     }
 
     /**
@@ -52,7 +53,7 @@ public class DepartmentController {
     @PutMapping("/{id}")
     public ResponseEntity<?> editDepartment(@PathVariable Integer id, @RequestBody DepartmentDto departmentDto){
         ApiResponse apiResponse = departmentService.editDepartment(id, departmentDto);
-        return ResponseEntity.status(apiResponse.isSuccess()?202:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?202:409).body(apiResponse);
     }
 
     /**
@@ -63,7 +64,7 @@ public class DepartmentController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDepartment(@PathVariable Integer id){
         ApiResponse apiResponse = departmentService.deleteDepartment(id);
-        return ResponseEntity.status(apiResponse.isSuccess()?200:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?200:409).body(apiResponse);
     }
 
 }

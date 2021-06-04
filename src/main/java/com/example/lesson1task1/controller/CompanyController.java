@@ -1,6 +1,7 @@
 package com.example.lesson1task1.controller;
 
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.payload.CompanyDto;
 import com.example.lesson1task1.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,12 @@ public class CompanyController {
      * @return ApiResponse
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getOne(@PathVariable Integer id){
-        ApiResponse response = companyService.getOne(id);
-        return ResponseEntity.status(response.isSuccess()?200:209).body(response);
+    public ResponseEntity<?> getOne(@PathVariable Integer id){
+        ApiResponseGetOne response = companyService.getOne(id);
+        if (response.isSuccess()){
+            return ResponseEntity.ok(response.getObject());
+        }
+        return ResponseEntity.notFound().build();
     }
 
     /**
@@ -41,7 +45,7 @@ public class CompanyController {
     @PostMapping
     public ResponseEntity<?> addAddress(@RequestBody CompanyDto companyDto){
         ApiResponse apiResponse = companyService.addCompany(companyDto);
-        return ResponseEntity.status(apiResponse.isSuccess()?201:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?201:409).body(apiResponse);
     }
 
     /**
@@ -52,7 +56,7 @@ public class CompanyController {
     @PutMapping("/{id}")
     public ResponseEntity<?> editCompany(@PathVariable Integer id, @RequestBody CompanyDto companyDto){
         ApiResponse apiResponse = companyService.editCompany(id, companyDto);
-        return ResponseEntity.status(apiResponse.isSuccess()?202:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?202:409).body(apiResponse);
     }
 
     /**
@@ -63,7 +67,7 @@ public class CompanyController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCompany(@PathVariable Integer id){
         ApiResponse apiResponse = companyService.deleteCompany(id);
-        return ResponseEntity.status(apiResponse.isSuccess()?200:209).body(apiResponse);
+        return ResponseEntity.status(apiResponse.isSuccess()?200:409).body(apiResponse);
     }
 
 

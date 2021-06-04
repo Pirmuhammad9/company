@@ -2,7 +2,9 @@ package com.example.lesson1task1.service;
 
 import com.example.lesson1task1.entity.Address;
 import com.example.lesson1task1.entity.Company;
+import com.example.lesson1task1.entity.Worker;
 import com.example.lesson1task1.payload.ApiResponse;
+import com.example.lesson1task1.payload.ApiResponseGetOne;
 import com.example.lesson1task1.payload.CompanyDto;
 import com.example.lesson1task1.repository.AddressRepository;
 import com.example.lesson1task1.repository.CompanyRepository;
@@ -28,9 +30,9 @@ public class CompanyService {
      * @param id
      * @return ApiResponse
      */
-    public ApiResponse getOne(Integer id){
+    public ApiResponseGetOne getOne(Integer id){
         Optional<Company> byId = companyRepository.findById(id);
-        return byId.isPresent()?new ApiResponse("found", true):new ApiResponse("not found", false);
+        return byId.isPresent()?new ApiResponseGetOne("found", true, byId.get()):new ApiResponseGetOne("not found", false, byId.get());
     }
 
     /**
